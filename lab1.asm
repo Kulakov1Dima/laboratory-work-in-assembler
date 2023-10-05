@@ -2,19 +2,25 @@
 .STACK 100h
 
 .DATA
-source db "Kulakov Dima$", 0, 0
-
+	buffer db  10, 100 dup ("$"), 0, 0
+	message1 db "enter a 16-digit: $", 0, 0
+	message2 db  "correct number$", 0, 0
+	message3 db  "uncorrect number$", 0, 0
 .CODE
+
+include labs/macros.inc
+include labs/checkhex.asm
+
 main PROC
-    include labs/macros.inc
     
     mov ax,@data
     mov ds,ax
-    
-    lea dx, source
-    mov ah, 9
-    int 21h
+        
+    print_s message1
+    input_s buffer
 
+    call hex
+    
     mov ah, 4Ch
     int 21h
 
