@@ -1,4 +1,4 @@
-[![Typing SVG](https://readme-typing-svg.herokuapp.com?color=%2336BCF7&lines=Laboratory+work+in+assembler)](https://git.io/typing-svg)
+[![Typing SVG](https://readme-typing-svg.herokuapp.com?color=%2336BCF7&lines=Laboratory+work+in+assembler)]()
 # Quick start
 - mounting disk:
 ```cmd
