@@ -2,9 +2,9 @@
 .STACK 100h
 
 .DATA
-	buffer db  10, 100 dup ('$'), 0, 0
-	message1 db "enter a 16-digit: $", 0, 0
-	message2 db  "that 's true$", 0, 0
+	buffer db 100 dup ('$')
+	message1 db "enter a 16-digit: $"
+    message2 db  10, 13, "uncorrect length$"
 	message3 db  10, 13, "uncorrect number$"
     done_message db 10, 13, "binary number: $"
 
@@ -25,7 +25,7 @@
     bin14 db "1110 $"
     bin15 db "1111 $"
 
-    outbin db  100 dup ('$')
+    outbin db  500 dup ('$')
 
 .CODE
 
@@ -42,10 +42,14 @@ main PROC
     input_s buffer
 
     call hex
+
     cmp al, 0
     jz out_program
     
     call binary
+
+    cmp al, 0
+    jz out_program
 
     print_s outbin
 
