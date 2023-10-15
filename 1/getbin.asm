@@ -3,6 +3,7 @@ binary PROC
     mov si, offset [buffer+2]
     lea di, outbin
     print_s done_message
+    
 str_loop1:
         mov dl, [si]
         b0
