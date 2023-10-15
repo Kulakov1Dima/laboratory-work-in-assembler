@@ -29,9 +29,9 @@
 
 .CODE
 
-include labs/macros.inc
-include labs/checkhex.asm
-include labs/getbin.asm
+include labs/1/macros.inc
+include labs/1/checkhex.asm
+include labs/1/getbin.asm
 
 main PROC
     
