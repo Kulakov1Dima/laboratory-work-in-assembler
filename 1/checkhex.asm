@@ -1,9 +1,10 @@
 hex PROC
     
-    mov si, offset [buffer+2]	
+    MOV si, offset [buffer+2]	
+    MOV cx, 0
 	
-str_loop:
-    mov dl, [si]
+STR_LOOP:
+    MOV dl, [si]
   
     cmp dl, '$'
     je done
@@ -27,6 +28,7 @@ check:
     ja hex_check
             
     inc si
+    INC cx
     jmp str_loop
     
 hex_check:
@@ -36,7 +38,8 @@ hex_check:
     ja mhex_check
     
     inc si
-    jmp str_loop
+    INC cx
+    jmp STR_LOOP
     
 mhex_check:
     cmp dl, 'a'
@@ -45,10 +48,12 @@ mhex_check:
     ja not_hex
     
     inc si
+    INC cx
     jmp str_loop
     
 h_check:
     inc si
+    INC cx
     mov dl, [si]
     
     cmp dl, '$'

@@ -1,0 +1,19 @@
+DEGREE PROC
+    CMP BL, 0
+    JE  SKIP_MUL
+
+    MOVZX CX, BL 
+    MOV AX, 16
+
+MULREPEAT:
+    MOV AL, AH
+    MUL AL
+    LOOP MULREPEAT
+
+    MOV AL, DH
+    MUL AL
+    MOV DX, AX
+
+SKIP_MUL:
+    RET
+DEGREE ENDP
