@@ -5,9 +5,6 @@ hex PROC
 	
 STR_LOOP:
     MOV dl, [si]
-  
-    cmp dl, '$'
-    je done
     
     cmp dl, 13
     je done
@@ -55,9 +52,6 @@ h_check:
     inc si
     INC cx
     mov dl, [si]
-    
-    cmp dl, '$'
-    je done
     
     cmp dl, 13
     je done

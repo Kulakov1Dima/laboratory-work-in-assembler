@@ -1,32 +1,33 @@
 include labs/1/deg.asm
 
 GETDEC PROC
-    MOV ax, 0
-    MOV si, offset [buffer+2]	
-    MOV bl, 0
+    MOV si, offset [buffer+2]
+    ADD si, cx
+    DEC si ;конец строки
+    
     LEN:
-	MOV dx, [si]
+    PUSH cx
+    mov dl, [si]
+    mov current, dl
+    
+    CALL DEGREE
 
-	PUSH cx
-	PUSH si
-	convernt
-	POP si
-	POP cx
-	
-	PUSH ax
-	PUSH cx
-	CALL DEGREE
-	POP cx
-	POP ax
+    add dword ptr [decnum], edx
+    MOV al, 1
 
-	ADD ax, dx
+    CMP decnum, 65535
+    ;JG not_above_limit
 
-	INC si
-	INC bl
-        LOOP LEN
+    POP cx
+    DEC si
+    LOOP LEN
+    JMP next
 
-DONEDEC:
-    MOV decnum, ax
+not_above_limit:
+    POP cx
+    print_s message4
+    mov al, 0
+
+next:
     RET
-
 GETDEC ENDP

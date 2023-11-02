@@ -1,19 +1,23 @@
 DEGREE PROC
-    CMP BL, 0
-    JE  SKIP_MUL
 
-    MOVZX CX, BL 
-    MOV AX, 16
+    add current, -48
 
-MULREPEAT:
-    MOV AL, AH
-    MUL AL
-    LOOP MULREPEAT
+    cmp current, 9
+    jg greater
+    jmp nogreater
 
-    MOV AL, DH
-    MUL AL
-    MOV DX, AX
+    greater:
+    ADD current, -7
+    nogreater:
 
-SKIP_MUL:
+    movzx dx, current
+    mov ax, deg
+    mul dx
+
+    mov ax, deg
+    mov dx, 16
+    mul dx
+    mov deg, ax
+
     RET
 DEGREE ENDP
