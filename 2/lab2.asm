@@ -22,8 +22,8 @@
 	masy dq 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
 .CODE
 
-include labs/3/tofloat.asm
-include labs/3/put.asm
+include labs/2/tofloat.asm
+include labs/2/put.asm
 
 MAIN PROC
 	MOV ax,@DATA
