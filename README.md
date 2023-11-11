@@ -36,3 +36,7 @@ tlink /v lab1
 ```cmd
 td lab1
 ```
+# Second laboratory work 
+Сalculation function value Y = (x* sin^3 x)/5.
+![image](https://github.com/Kulakov1Dima/laboratory-work-in-assembler/assets/84613812/88ee5c07-9aad-44ee-a7bc-d8ad5fabdafd)
+
