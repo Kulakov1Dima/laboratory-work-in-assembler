@@ -24,6 +24,7 @@
 
 include labs/2/tofloat.asm
 include labs/2/put.asm
+include labs/2/f.asm
 
 MAIN PROC
 	MOV ax,@DATA
@@ -48,27 +49,22 @@ MAIN PROC
 	XOR di, di
 TAKEMAS:
 	FST QWORD PTR [mas[di]]
+        FILD del
 
-	FSIN
-	FLD ST(0)
-	FMUL ST(0), ST(0)
-	FMUL ST(0), ST(1)
-	FFREE ST(1)
-	FMUL mas[di]
-	FIDIV del
+	CALL funk
 
 	FSTP QWORD PTR [masy[di]]
 	FLD masy[di] ; проверка 
 	FFREE ST(0)
-	
+
+
 	FLD mas[di]
 	FLD delta
 	FADD
 	INC di
-	LOOP TAKEMAS
-    	
+LOOP TAKEMAS
 	FFREE ST(0)
-			
+	
 	MOV ah, 4Ch
 	INT 21h
 MAIN ENDP
