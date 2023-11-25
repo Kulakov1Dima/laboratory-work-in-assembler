@@ -84,11 +84,16 @@ MAIN PROC
 drawText:
 	mov ah, 3h
 	mov al, [si]
+	cmp al, ' '
+	je skipSpace
+
 	mov word ptr es:[di], ax
 	add di, 2
+
+skipSpace:
 	inc si
 	loop drawText
-	
+		
 	; Закрытие файла
 	MOV bx, [FileNumber]
 	MOV ah, 03Eh

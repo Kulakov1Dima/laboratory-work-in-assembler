@@ -69,7 +69,12 @@ addFile:
 	INT 21h
 	POP ax
 	JC error
-	JMP exit1
+	
+	; Закрытие файла
+	MOV bx, [FileNumber]
+	MOV ah, 03Eh
+	INT 21h
+	JMP open
 error:
 	MOV dx, OFFSET TextError
 	MOV ah, 9
