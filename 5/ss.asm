@@ -45,7 +45,7 @@ TAKEMAS:
 	FLD mas[di]
 	FLD delta
 	FADD
-	INC di
+	ADD di, 8
 LOOP TAKEMAS
 	FFREE ST(0)
 	RET
