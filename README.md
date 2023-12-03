@@ -43,4 +43,10 @@ td lab1
 
 # Third laboratory work
 Building a function based on the second laboratory work
+
 ![image](https://github.com/Kulakov1Dima/laboratory-work-in-assembler/assets/84613812/b4898cf5-7595-4483-adc5-0428a5fe10c4)
+
+# Sixth laboratory work
+
+![image](https://github.com/Kulakov1Dima/laboratory-work-in-assembler/assets/84613812/46e2dbab-5e69-48ec-b6f5-920bc1182b12)
+
