@@ -258,34 +258,44 @@ br2:
 	MOV si, offset bracket2
   	JMP ex
 zero:
-  	MOV si, offset pixel0
+  	MOV di, '0'
+	CALL matrix
   	JMP ex
 one:
-  	MOV si, offset pixel1
+  	MOV di, '1'
+	CALL matrix
   	JMP ex
 two:
-  	MOV si, offset pixel2
+  	MOV di, '2'
+	CALL matrix
   	JMP ex
 three:
-  	MOV si, offset pixel3
+  	MOV di, '3'
+	CALL matrix
   	JMP ex
 four:
-  	MOV si, offset pixel4
+  	MOV di, '4'
+	CALL matrix
   	JMP ex
 five:
-  	MOV si, offset pixel5
+  	MOV di, '5'
+	CALL matrix
   	JMP ex
 six:
-  	MOV si, offset pixel6
+	MOV di, '6'
+	CALL matrix
   	JMP ex
 seven:
-  	MOV si, offset pixel7
+  	MOV di, '7'
+	CALL matrix
   	JMP ex
 eight:
-  	MOV si, offset pixel8
+  	MOV di, '8'
+	CALL matrix
   	JMP ex
 nine:
-  	MOV si, offset pixel9
+  	MOV di, '9'
+	CALL matrix
   	JMP ex
 
 ex:
