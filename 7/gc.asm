@@ -227,6 +227,9 @@ other:
   	JE eight
 	cmp al, '9'
   	JE nine
+  	cmp al, '.'
+  	JE ppoint
+
 ddec1:
 	MOV si, offset ddec
 	JMP ex
@@ -297,6 +300,12 @@ nine:
   	MOV di, '9'
 	CALL matrix
   	JMP ex
+  	
+ppoint:
+  	MOV di, '.'
+	CALL matrix
+  	JMP ex
+
 
 ex:
     	MOV di, offset curpix

@@ -40,10 +40,10 @@ INFRECTX:
 	
 		POP dx
 		INC dx
-		CMP dx, 70
+		CMP dx, 57
 		JNE INFRECTY
 		DEC cx
-	CMP cx, 190
+	CMP cx, 165
 	JAE INFRECTX		
 
 	POP es

@@ -6,15 +6,26 @@
 	;сегмент информации о графике
 	rightxlabel db "right x: $" 
 	leftxlabel db "left x: $"
+	minxlabel db "min y: $" 
+	maxxlabel db "max y: $"
 	degree dd 10
 	lenpoint dw 100			 	; 2 знака после запятой
+	znak dd 1
+	wholex dw 0
+	pointx dw 0
+	maxy dq 0.0
+	miny dq 0.0
+	rightx db 10 dup ('$')
+	leftx db 10 dup ('$')	
+	minys db 10 dup ('$')
+	maxys db 10 dup ('$')	
 	;сегмент переменных графика........................................................................................
 	numA dq -20.2
 							;начальное значение x конечное зависит от шага
 	koefY dq 8.1
 	koefX dq 7.8
 	; k = 2
-	numN dd 450				;колличество точек графика (не пикселей)
+	numN dw 450				;колличество точек графика (не пикселей)
 	delta dq 0.09				; шаг x
 	del dd 5					
 	mas dq 3600 dup (0.0)			;колличество точек *8
@@ -95,6 +106,8 @@ include labs/7/lab3v2.0/field.asm 	; поля
 include labs/7/lab3v2.0/lab3.asm 	; график
 include labs/7/lab7/info.asm 		; вывод информации о графике
 include labs/7/lab7/drawPix.asm		; вывод матриц 8x8
+include labs/7/lab7/tostr.asm		; перевод числа в строку
+include labs/7/lab7/find.asm		; поиск экстремумов
 
 		
 MAIN PROC
@@ -114,30 +127,13 @@ MAIN PROC
 	CALL WHITEW
 	CALL LAB3	
 	POP es
-	CALL INFO
+	CALL FINDEXT
+	CALL floattostr
+	CALL INFO		 
 	
-	FINIT
-	FLD1
-	FLD QWORD PTR mas[3600]
-	FPREM
-	FSTP
-	FLDZ
-	FCOM
-	FSTP st(0)	
-	FSTSW AX           
-	SAHF
-	JAE less_than_zero
-	JMP done_comparison
-less_than_zero:
-	FCHS
-done_comparison:
-	
-	
-	
-	FIMUL lenpoint
-	FRNDINT
-	
-								; код для рисования
+	;FLD qword ptr maxy
+	;FLD qword ptr miny
+							; код для рисования
 	MOV di, OFFSET [TextPlace]
 	MOV cx, lenText
 	ADD cx, -2				
