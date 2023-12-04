@@ -7,18 +7,18 @@
 	rightxlabel db "right x: $" 
 	leftxlabel db "left x: $"
 	degree dd 10
-	lenpoint dw 2
+	lenpoint dw 100			 	; 2 знака после запятой
 	;сегмент переменных графика........................................................................................
-	numA dq -57.6
+	numA dq -20.2
 							;начальное значение x конечное зависит от шага
-	koefY dq 3.1
-	koefX dq 2.7
+	koefY dq 8.1
+	koefX dq 7.8
 	; k = 2
-	numN dd 1280				;колличество точек графика (не пикселей)
+	numN dd 450				;колличество точек графика (не пикселей)
 	delta dq 0.09				; шаг x
 	del dd 5					
-	mas dq 1280 dup (0.0)	
-	masy dq 1280 dup (0.0)
+	mas dq 3600 dup (0.0)			;колличество точек *8
+	masy dq 3600 dup (0.0)
 	curent dd 0
 	zeroX dd 160
 	zeroY dd 100
@@ -116,10 +116,26 @@ MAIN PROC
 	POP es
 	CALL INFO
 	
-	
+	FINIT
 	FLD1
-	FLD QWORD PTR mas[6]
+	FLD QWORD PTR mas[3600]
 	FPREM
+	FSTP
+	FLDZ
+	FCOM
+	FSTP st(0)	
+	FSTSW AX           
+	SAHF
+	JAE less_than_zero
+	JMP done_comparison
+less_than_zero:
+	FCHS
+done_comparison:
+	
+	
+	
+	FIMUL lenpoint
+	FRNDINT
 	
 								; код для рисования
 	MOV di, OFFSET [TextPlace]
