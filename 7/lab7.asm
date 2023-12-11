@@ -131,8 +131,8 @@ MAIN PROC
 	CALL floattostr
 	CALL INFO		 
 	
-	;FLD qword ptr maxy
-	;FLD qword ptr miny
+	FLD qword ptr maxy
+	FLD qword ptr miny
 							; код для рисования
 	MOV di, OFFSET [TextPlace]
 	MOV cx, lenText
