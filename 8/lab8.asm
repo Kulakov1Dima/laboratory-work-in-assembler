@@ -41,7 +41,7 @@
 	message5 db 10, "access denied$"
 	addmessage1 db 10, "create a file? Y/N $"
 	addAccess db 2, 3 dup(?)
-	FileName db "/labs/6/Kulakov.txt", 0
+	FileName db "/labs/8/Kulakov.txt", 0
 	FileNumber dw ?
 	TextLine db "Kulakov Dmitriy 6303: Y = (x* sin^3 x)/5", 13, 10
 	TextError db 10, "ERROR!$"
@@ -93,6 +93,9 @@
 	
 	symbol_buffer db 64 dup (0)
 	revers_buffer db 64 dup (0)
+	
+	old_int16h DW 0 ; Сохраненное значение обработчика прерывания 16h
+	res_msg DB "Resident program: press 'p' to restart", 0Dh, 0Ah, "$" ; Сообщение для вывода
 
 .CODE
 
@@ -108,12 +111,15 @@ include labs/8/lab7/info.asm 		; вывод информации о график
 include labs/8/lab7/drawPix.asm		; вывод матриц 8x8
 include labs/8/lab7/tostr.asm		; перевод числа в строку
 include labs/8/lab7/find.asm		; поиск экстремумов
+include labs/8/resident.asm
 
 		
 MAIN PROC
 	MOV ax,@DATA
 	MOV ds,ax
 	MOV es, ax 
+	
+	CALL resident
 	
 	CALL getDescriptor
 	CALL readFile
@@ -167,31 +173,11 @@ redraw:							; код для рисования
 		ADD posx, 100
 		nextdraw:
 		LOOP drawText	
-listenkey:		
+			
+	MOV ax, 0
 	MOV ah, 0; ожидание нажатия клавиши
 	INT 16h
 	
-	cmp al, 'e'
-	je qe
-	
-	cmp al, 'r'
-	je edittext
-
-	JMP listenkey
-edittext:	
-	MOV di, OFFSET [TextPlace]
-	MOV al, byte ptr[di]
-	ADD di, 8
-	MOV bl,  byte ptr[di]
-	MOV [di], al
-	ADD di, -8
-	MOV [di], bl
-	
-	MOV posx, 0
-	MOV posy, 0
-
-JMP redraw
-
 qe:	
 	CALL RETURNVIDMODE	
 			          		
