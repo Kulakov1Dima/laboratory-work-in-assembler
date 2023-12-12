@@ -4,9 +4,14 @@ ASSUME cs:CODE, ds:CODE
 org 100h
 f10:
 	JMP START
-	hello_message db 'Resident module installed!', 10, 13,'$'
+	hello_message db 'Resident module installed! Press f11 to take pictures :)', 10, 13,'$'
 	Old_16h dd 0
-
+	
+	sMode db 3
+	
+	include labs/8/snip.asm
+	include labs/8/video.asm
+	
 NEW16h:
 	CMP ah, 0
 	JE resid
@@ -22,9 +27,7 @@ resid:
 	JNE	exit
 	
 	PUSHA
-	MOV ah, 02h
-	MOV dl, 'F'
-	INT 21h
+	CALL SNIP_TOOL
 	POPA
 exit:
 	IRET
