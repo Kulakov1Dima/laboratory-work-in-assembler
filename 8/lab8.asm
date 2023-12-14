@@ -7,7 +7,7 @@ f10:
 	JMP START
 	hello_message db 'Resident module installed! Press f11 to take pictures :)', 10, 13, '$'
 	FileNumber dw ?
-	filename db 64 dup('b')
+	FileName db 'Out.txt'
 	Old_16h dd 0
 	sMode db 0
 
@@ -29,30 +29,47 @@ NEW16h:
 resid:
 	PUSHF
 	CALL DWORD PTR cs:Old_16h ; Вызываем стандартный обработчик
-
-	CMP ah, 85h
-	JNE exit
-
+	
 	PUSHA
-	
-	mov cx, 64
-	lea di, filename
-	mov al, 'A'
-	cld              
-	rep stosb       
-		
+	in al, 60h
+     	cmp al, 19h            ; нажата p?
+     	POPA
+	jne exit
+	PUSHA
+	PUSH es               
+	mov ax, 40h
+	mov es, ax
+	mov al, es:[17h]
+	and al, 1000b         ; нажата ALT?
+	POP es
+	POPA
+	jz exit
+ 
+	PUSHA
 	CALL SNIP_TOOL
+	р
+	MOV ah, 3Ch ;открытие файла
+	MOV cx, 0
+	MOV dx, OFFSET FileName
+	INT 21h
 	
-		
-	mov cx, 6
-	mov bx, offset filename
-m1:  mov ah, 0eh
-	mov al, cs:[bx]
-	;int 10h
-	inc bx
-	loop m1
-		
 	MOV [FileNumber], ax
+	PUSH ax
+	; Запись строки в файл
+	MOV ah, 040h
+	MOV bx, [FileNumber]
+	MOV cx, 26
+	MOV dx, OFFSET hello_message
+	INT 21h
+	POP ax
+	;JC exit
+	
+	; Закрытие файла
+	MOV bx, [FileNumber]
+	MOV ah, 03Eh
+	INT 21h
+
+	;CALL PlaySound
 	POPA
 exit:
 	JMP cs:Old_16h ; Вызываем правильный системный обработчик.
@@ -61,7 +78,7 @@ START:
 	MOV ah, 09h
 	MOV dx, OFFSET hello_message
 	INT 21h
-
+		
 	MOV ah, 35h ; Получаем вектор правильного (системного) обработчика (в ES:BX).
 	MOV al, 16h
 	INT 21h
