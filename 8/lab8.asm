@@ -9,7 +9,7 @@ MAIN: 	JMP START
 	linebuf db 80 dup (0), 13, 10
 	;файл видео
 	
-	FileNameV db 'Screen.bin', 0
+	FileNameV db 'Screen.txt', 0
 	linebufV db 320 dup (0)
 	
 	;старое прерывание
