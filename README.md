@@ -1,4 +1,9 @@
+# ЭВМ и периферийные устройства
+
+![Project Logo](https://ssau.ru/pagefiles/of_docs/logo_osnovnoy_ENG.png)
+
 [![Typing SVG](https://readme-typing-svg.herokuapp.com?color=%2336BCF7&lines=Laboratory+work+in+assembler)]()
+
 # Quick start
 - mounting disk:
 ```cmd
@@ -49,4 +54,21 @@ Building a function based on the second laboratory work
 # Sixth laboratory work
 
 ![image](https://github.com/Kulakov1Dima/laboratory-work-in-assembler/assets/84613812/46e2dbab-5e69-48ec-b6f5-920bc1182b12)
+
+# Eighth laboratory work
+
+- starting compilation:
+```cmd
+tasm labs\8\lab8
+```
+- creating an executable file:
+```cmd
+tlink /t lab8
+```
+- launch:
+```cmd
+lab8.com
+```
+
+
 
