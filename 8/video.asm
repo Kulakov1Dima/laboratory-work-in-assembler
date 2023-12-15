@@ -2,6 +2,9 @@
 
 SAVEVIDMODE PROC
 
+	MOV ax, cs
+    	MOV ds, ax
+
 	MOV ah, 0Fh 			; сохранить видеорежим
 	INT 10h
 	MOV sMode, al
@@ -14,6 +17,8 @@ SAVEVIDMODE PROC
 	SAVEVIDMODE ENDP
 	
 RETURNVIDMODE PROC
+	MOV ax, cs
+    	MOV ds, ax
 
 	MOV ah, 0				; ожидание нажатия клавиши
 	INT 16h

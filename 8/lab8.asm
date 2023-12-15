@@ -4,10 +4,13 @@
 ORG 100h
 
 MAIN: 	JMP START
-	;файл
-	FileName db 'Out.txt',0
-	linebuf db 80 dup (0) 
-	db 13,10
+	;файл текст
+	FileName db 'Out.txt', 0
+	linebuf db 80 dup (0), 13, 10
+	;файл видео
+	
+	FileNameV db 'Screen.bin', 0
+	linebufV db 320 dup (0)
 	
 	;старое прерывание
 	Old_16h dd 0
@@ -50,51 +53,14 @@ NEW16h:
 	jz exit
 	
 	PUSHA
-	call wrtfile
-	;CALL SNIP_TOOL
+	CALL SNIP_TOOL
 	POPA
 
 exit:
 	POP es
 	POP ds
-	JMP cs:Old_16h ; Вызываем правильный системный обработчик.
-	
-wrtfile:
-    mov dx,offset FileName
-    mov cx,0
-    mov ah,3Ch ; создать файл
-    int 21h
-    jc  wrt3   ; возврат при ошибке
-    mov bx,ax  ; bx=дескриптор файла
-    mov cx,25  ; 25 строк экрана
-    mov si,0   ; начало экрана
-    cld
-wrt1:   push cx
-    mov  di,offset linebuf
-    mov ax,0B800h ; видеосегмент в текстовом режиме
-    mov ds,ax
-    mov ax,cs
-    mov es,ax
-    mov cx,80 ; длина строки в символах
-wrt2:   movsb     ; переслать строку символов
-    inc si    ; байты атрибутов пропускаются
-    loop wrt2
-    mov ax,cs
-    mov ds,ax
-    mov dx,offset linebuf
-    mov cx,82
-    mov ah,40h ; записать строку в файл
-    int 21h
-    pop cx
-    loop wrt1
-    mov ah,3Eh ; закрыть файл
-    int 21h
-wrt3:   ret
-    
-mysub: mov ax,0E07h ; bell - пискнуть динамиком
-       int 10h
-       ret
-       
+	JMP Old_16h ; Вызываем правильный системный обработчик.
+	 
 rsize   db 0
 
 hello_message db 'Resident module installed! Press alt+p to take pictures :)', 10, 13, '$'
